@@ -42,6 +42,16 @@ git-mirror -g mirror-test --git-timeout 120
 
 This will limit any `git` invocation to 120 seconds. If a `git` command reaches this threshold, the repository will be aborted and the next job in line will be taken up by the worker.
 
+### Retrying transient Git failures
+
+`git-mirror` retries transient Git failures, such as connection resets, TLS disconnects, HTTP 5xx responses, and timeouts. Deterministic failures, such as authentication errors, invalid ref names, and archived destinations, are not retried. The default is two retries with a 30-second delay between attempts.
+
+```sh
+git-mirror -g mirror-test --git-retries 2 --git-retry-delay 30
+```
+
+Set `--git-retries 0` to disable retries. Failed mirror clones are removed before a retry so the next attempt starts from a clean repository.
+
 ### Description format
 
 For `git-mirror` to mirror a repository it needs to know where to sync from.

@@ -9,10 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add a new `git_mirror_timeout` gauge metric to track how many projects run into a timeout.
+- Add bounded retries for transient Git operation failures.
+- Include captured stderr in Git operation timeout errors.
+- Add `--git-retries` and `--git-retry-delay` options.
 
 ### Changed
 
 - Switch from native-tls to rustls with `rustls-platform-verifier` for platform certificate integration.
+- Clean up incomplete mirror clones before retrying.
 
 ## [0.14.16] - 2025-10-20
 

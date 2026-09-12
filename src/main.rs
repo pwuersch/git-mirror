@@ -116,6 +116,14 @@ struct Opt {
     /// Timeout in seconds for individual git operations
     #[arg(long, value_parser = parse_duration)]
     git_timeout: Option<Duration>,
+
+    /// Number of retries for transient Git operation failures
+    #[arg(long, default_value = "2")]
+    git_retries: u32,
+
+    /// Delay in seconds between retries of transient Git operation failures
+    #[arg(long, default_value = "30")]
+    git_retry_delay: u64,
 }
 
 fn parse_duration(arg: &str) -> Result<Duration, std::num::ParseIntError> {
@@ -137,6 +145,8 @@ impl From<Opt> for MirrorOptions {
             fail_on_sync_error: opt.fail_on_sync_error,
             mirror_lfs: opt.lfs,
             git_timeout: opt.git_timeout,
+            git_retries: opt.git_retries,
+            git_retry_delay: Duration::from_secs(opt.git_retry_delay),
         }
     }
 }

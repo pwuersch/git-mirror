@@ -63,6 +63,8 @@ pub fn mirror_repo(
         opts.git_executable.clone(),
         opts.mirror_lfs,
         opts.git_timeout,
+        opts.git_retries,
+        opts.git_retry_delay,
     );
 
     git.git_version()?;
@@ -272,6 +274,8 @@ pub struct MirrorOptions {
     pub fail_on_sync_error: bool,
     pub mirror_lfs: bool,
     pub git_timeout: Option<Duration>,
+    pub git_retries: u32,
+    pub git_retry_delay: Duration,
 }
 
 pub fn do_mirror(provider: Box<dyn Provider>, opts: &MirrorOptions) -> Result<()> {

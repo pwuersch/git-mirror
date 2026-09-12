@@ -98,13 +98,19 @@ pub struct Git {
 }
 
 impl Git {
-    pub fn new(executable: String, lfs_enabled: bool, timeout: Option<Duration>) -> Git {
+    pub fn new(
+        executable: String,
+        lfs_enabled: bool,
+        timeout: Option<Duration>,
+        retries: u32,
+        retry_delay: Duration,
+    ) -> Git {
         Git {
             executable,
             lfs_enabled,
             timeout,
-            retries: 2,
-            retry_delay: Duration::from_secs(30),
+            retries,
+            retry_delay,
         }
     }
 
